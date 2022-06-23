@@ -1,16 +1,55 @@
 accounts:
-  - name: alice
-    coins: ["20000token", "200000000stake"]
-  - name: bob
-    coins: ["10000token", "100000000stake"]
+  - name: mat
+    coins: [ "500000000ubir" ]
+  - name: chaos
+    coins: [ "500000000ubir" ]
+  - name: faucet
+    coins: [ "999999000000000ubir" ]
 validator:
-  name: alice
-  staked: "100000000stake"
+  name: chaos
+  staked: "400000000ubir"
 client:
   openapi:
     path: "docs/static/openapi.yml"
   vuex:
     path: "vue/src/store"
 faucet:
-  name: bob
-  coins: ["5token", "100000stake"]
+  name: faucet
+  coins: [ "100000000ubir" ]
+init:
+  app:
+    api:
+      swagger: true
+      enable: true
+  config:
+    consensus:
+      timeout_propose: "3s"
+      timeout_propose_delta: "500ms"
+      timeout_prevote: "1s"
+      timeout_prevote_delta: "500ms"
+      timeout_precommit: "1s"
+      timeout_precommit_delta: "500ms"
+      timeout_commit: "5s"
+genesis:
+  chain_id: "wargames-1"
+  app_state:
+    crisis:
+      constant_fee:
+        amount: "1000"
+        denom: "ubir"
+    gov:
+      deposit_params:
+        min_deposit:
+          - { amount: "10000000", denom: "ubir" }
+    mint:
+      minter:
+        inflation: "0.0"
+      params:
+        blocks_per_year: "6307200"
+        mint_denom: "ubir"
+        inflation_max: "0.0"
+        inflation_min: "0.0"
+        inflation_rate_change: "0.0"
+    staking:
+      params:
+        bond_denom: "ubir"
