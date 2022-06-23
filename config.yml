@@ -16,6 +16,9 @@ client:
 faucet:
   name: faucet
   coins: [ "100000000ubir" ]
+  coins_max: [ "1000000000ubir" ]
+  rate_limit_window: "86400s"
+  port: 4500
 init:
   app:
     api:
@@ -31,7 +34,7 @@ init:
       timeout_precommit_delta: "500ms"
       timeout_commit: "5s"
 genesis:
-  chain_id: "wargames-1"
+  chain_id: "oasis-1"
   app_state:
     crisis:
       constant_fee:
