@@ -15,6 +15,7 @@ The layer 1 Cosmos blockchain for the Crypto Dollar
 Testnet chain name: `oasis-1`  
 Genesis file: provided on request (see #chain-dev on discord)  
 Wallet prefix: `birth`  
+Build with `ignite chain build`  
 
 
 
