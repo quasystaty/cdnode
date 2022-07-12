@@ -8,9 +8,9 @@ The layer 1 Cosmos blockchain for the Crypto Dollar
 
 `config.toml`
 - moniker = "whatever you want"
-- private_peers_ids = "00610aff7f45c73c44174b6ce61b471f3f18a02c@167.99.177.244"
-- bootstrap_peers = "00610aff7f45c73c44174b6ce61b471f3f18a02c@167.99.177.244"
-- persistent_peers = "00610aff7f45c73c44174b6ce61b471f3f18a02c@167.99.177.244"
+- private_peers_ids = "00610aff7f45c73c44174b6ce61b471f3f18a02c@167.99.177.244:26656"
+- bootstrap_peers = "00610aff7f45c73c44174b6ce61b471f3f18a02c@167.99.177.244:26656"
+- persistent_peers = "00610aff7f45c73c44174b6ce61b471f3f18a02c@167.99.177.244:26656"
 
 ---  
 
