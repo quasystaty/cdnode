@@ -71,7 +71,7 @@ chain-id = "oasis-1"
 At this point, your node will start synchronizing with the existing network and catch up on blocks. This might take a while. You can verify the state of your node with the following command: `cdnoded status`, look for the `catching_up` property; once `false`, that means you are in sync with the rest of the chain.  
 
 It is recommended to run the this binary as a daemon like systemd. Here is an example of a `/etc/systemd/system/cdnode.service`:  
-_replace $USER with your username and $GOBIN with the path where `cdnoded` is installed.
+_replace $USER with your username and $GOBIN with the path where `cdnoded` is installed._
 
 ```bash
 [Unit]  
