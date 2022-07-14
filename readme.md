@@ -13,6 +13,7 @@ The layer 1 Cosmos blockchain for the Crypto Dollar
 - Public RPC: [https://chaos-rpc.cryptodollar.dev](https://chaos-rpc.cryptodollar.dev)  
 - Public LCD: [https://chaos-lcd.cryptodollar.dev](https://chaos-lcd.cryptodollar.dev)  
 - LCD Docs: [https://chaos-lcd.cryptodollar.dev/swagger/](https://chaos-lcd.cryptodollar.dev/swagger/)  
+- Block explorer: [https://explorer.cryptodollar.dev](https://explorer.cryptodollar.dev)
 
 # Chain Specs  
 
@@ -68,7 +69,8 @@ At this point, your node will start synchronizing with the existing network and 
 
 Once you have a fully sync'd node, you can start signing blocks by becoming a validator.  
 
-### 1. Make you have a wallet configured: `cdnoded keys list`. If you don't, add one: `cdnoded keys add <wallet name>`. If you need funds, hit the faucet on discord with `/request <wallet address>`.  
+### 1. Make you have a wallet configured  
+with `cdnoded keys list`. If you don't, add one: `cdnoded keys add <wallet name>`. If you need funds, hit the faucet on discord with `/request <wallet address>`.  
 
 ### 2. Execute the **create-validator** transaction:  
 > cdnoded tx staking create-validator \\  
@@ -88,10 +90,14 @@ Once you have a fully sync'd node, you can start signing blocks by becoming a va
 * [CosmosHub example](https://hub.cosmos.network/main/validators/validator-setup.html#create-your-validator)
 
 
-
+<br />
+<br />
+<br />
+<br />
+ 
 > Todo:
-> - add build script
-> - store releases
-> - store genesis
+> - ~~add build script~~
+> - ~~store releases~~
+> - ~~store genesis~~
 > - links to snapshots
-> - How-To guide
+> - ~~How-To guide~~
