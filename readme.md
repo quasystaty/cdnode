@@ -46,15 +46,21 @@ Moniker is your node name.
 > The default location for configuration files is `$HOME/.cdnode/config`  
 
 `app.toml`
-- minimum-gas-prices = "0.0025ubir"
+```bash
+minimum-gas-prices = "0.0025ubir"
+```
 
 `config.toml`
-- moniker = _<moniker entered at step 1>_  
-- persistent_peers = "d9f121783c3e80c0e2c98da9f9c33cf5838a49c1@167.99.177.244:26656"  
+```bash
+moniker = "moniker_entered_at_step_1"
+persistent_peers = "d9f121783c3e80c0e2c98da9f9c33cf5838a49c1@167.99.177.244:26656"  
+```
 
 `client.toml`
 
-- chain-id = "oasis-1"  
+```bash
+chain-id = "oasis-1"  
+```
 
 
 
@@ -65,22 +71,25 @@ Moniker is your node name.
 At this point, your node will start synchronizing with the existing network and catch up on blocks. This might take a while. You can verify the state of your node with the following command: `cdnoded status`, look for the `catching_up` property; once `false`, that means you are in sync with the rest of the chain.  
 
 It is recommended to run the this binary as a daemon like systemd. Here is an example of a `/etc/systemd/system/cdnode.service`:  
+_replace $USER with your username and $GOBIN with the path where `cdnoded` is installed.
 
-> [Unit]  
-> Description=CDNode Daemon  
-> After=network.target  
->   
-> [Service]  
-> Type=simple  
-> User=$USER  
-> ExecStart=$CONFIG/cdnoded start    
-> Restart=on-abort  
->   
-> [Install]  
-> WantedBy=multi-user.target  
->   
-> [Service]  
-> LimitNOFILE=65535    
+```bash
+[Unit]  
+Description=CDNode Daemon  
+After=network.target  
+  
+[Service]  
+Type=simple  
+User=$USER  
+ExecStart=$GOBIN/cdnoded start    
+Restart=on-abort  
+  
+[Install]  
+WantedBy=multi-user.target  
+  
+[Service]  
+LimitNOFILE=65535    
+```
 
 
 # Running a validator  
@@ -91,19 +100,21 @@ Once you have a fully sync'd node, you can start signing blocks by becoming a va
 with `cdnoded keys list`. If you don't, add one: `cdnoded keys add <wallet name>`. If you need funds, hit the faucet on discord with `/request <wallet address>`.  
 
 ### 2. Execute the **create-validator** transaction:  
-> cdnoded tx staking create-validator \\  
-> --amount="_1234ubir_" \\  
-> --pubkey=$(cdnoded tendermint show-vallidator) \\  
-> --moniker="_your moniker_" \\  
-> --chain-id="oasis-1" \\  
-> --commission-rate="_0.10_" \\ 
-> --commission-max="_0.20_" \\ 
-> --commission-max-change-rate="_0.01_" \\ 
-> --min-self-delegation="_123ubir_" \\ 
-> --gas="auto" \\ 
-> --gas-prices="0.0025ubir" \\ 
-> --gas-adjustment="1.75" \\ 
-> --from="_your local wallet name_" \\ 
+```bash
+cdnoded tx staking create-validator \\  
+--amount="_1234ubir_" \\  
+--pubkey=$(cdnoded tendermint show-vallidator) \\  
+--moniker="_your moniker_" \\  
+--chain-id="oasis-1" \\  
+--commission-rate="_0.10_" \\ 
+--commission-max="_0.20_" \\ 
+--commission-max-change-rate="_0.01_" \\ 
+--min-self-delegation="_123ubir_" \\ 
+--gas="auto" \\ 
+--gas-prices="0.0025ubir" \\ 
+--gas-adjustment="1.75" \\ 
+--from="_your local wallet name_" \\ 
+```
 
 * [CosmosHub example](https://hub.cosmos.network/main/validators/validator-setup.html#create-your-validator)
 
