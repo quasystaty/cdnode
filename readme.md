@@ -29,10 +29,9 @@ The layer 1 Cosmos blockchain for the Crypto Dollar
 
 - [Install Golang v1.18+](https://go.dev/doc/install)
 - Set your [$GOBIN and $GOPATH](https://pkg.go.dev/cmd/go#hdr-GOPATH_environment_variable) env
-- install [Ignite CLI](https://docs.ignite.com/guide/install)
 - `git clone https://github.com/cdbo/cdnode.git`  
 - `cd cdnode`  
-- `ignite chain build`  
+- `make install`  
 
 At this point, you have a `cdnoded` binary installed, used to run a node/validator and execute/query the chain.
 
@@ -64,6 +63,25 @@ Moniker is your node name.
 ### 4. `cdnoded start`  
 
 At this point, your node will start synchronizing with the existing network and catch up on blocks. This might take a while. You can verify the state of your node with the following command: `cdnoded status`, look for the `catching_up` property; once `false`, that means you are in sync with the rest of the chain.  
+
+It is recommended to run the this binary as a daemon like systemd. Here is an example of a `/etc/systemd/system/cdnode.service`:  
+
+> [Unit]  
+> Description=CDNode Daemon  
+> After=network.target  
+>   
+> [Service]  
+> Type=simple  
+> User=$USER  
+> ExecStart=$CONFIG/cdnoded start    
+> Restart=on-abort  
+>   
+> [Install]  
+> WantedBy=multi-user.target  
+>   
+> [Service]  
+> LimitNOFILE=65535    
+
 
 # Running a validator  
 
