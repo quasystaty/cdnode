@@ -102,18 +102,18 @@ with `cdnoded keys list`. If you don't, add one: `cdnoded keys add <wallet name>
 ### 2. Execute the **create-validator** transaction:  
 ```bash
 cdnoded tx staking create-validator \\  
---amount="_1234ubir_" \\  
+--amount="1000000000ubir" \\  
 --pubkey=$(cdnoded tendermint show-vallidator) \\  
---moniker="_your moniker_" \\  
+--moniker="My Node" \\  
 --chain-id="oasis-1" \\  
---commission-rate="_0.10_" \\ 
---commission-max="_0.20_" \\ 
---commission-max-change-rate="_0.01_" \\ 
---min-self-delegation="_123ubir_" \\ 
+--commission-rate="0.05" \\ 
+--commission-max="0.20" \\ 
+--commission-max-change-rate="0.01" \\ 
+--min-self-delegation="1000000ubir" \\ 
 --gas="auto" \\ 
 --gas-prices="0.0025ubir" \\ 
 --gas-adjustment="1.75" \\ 
---from="_your local wallet name_" \\ 
+--from="myWalletName" \\ 
 ```
 
 * [CosmosHub example](https://hub.cosmos.network/main/validators/validator-setup.html#create-your-validator)
