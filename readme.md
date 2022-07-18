@@ -35,6 +35,12 @@ The layer 1 Cosmos blockchain for the Crypto Dollar
 
 At this point, you have a `cdnoded` binary installed, used to run a node/validator and execute/query the chain.
 
+# Running a local development environment  
+Read through [init_local.sh](init_local.sh) for more details.  
+
+### 1. `./init_local.sh`  
+### 2. `cdnoded start`
+
 # Running a node  
 
 ### 1. `cdnoded init <moniker> --chain-id oasis-1`  
