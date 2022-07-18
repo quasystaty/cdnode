@@ -109,7 +109,7 @@ with `cdnoded keys list`. If you don't, add one: `cdnoded keys add <wallet name>
 ```bash
 cdnoded tx staking create-validator \\  
 --amount="1000000000ubir" \\  
---pubkey=$(cdnoded tendermint show-vallidator) \\  
+--pubkey=$(cdnoded tendermint show-validator) \\  
 --moniker="My Node" \\  
 --chain-id="oasis-1" \\  
 --commission-rate="0.05" \\ 
