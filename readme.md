@@ -125,13 +125,13 @@ with `cdnoded keys list`. If you don't, add one: `cdnoded keys add <wallet name>
 ```bash
 cdnoded tx staking create-validator \\  
 --amount="1000000000ubir" \\  
---pubkey=$(cdnoded tendermint show-vallidator) \\  
+--pubkey=$(cdnoded tendermint show-validator) \\  
 --moniker="My Node" \\  
 --chain-id="oasis-1" \\  
 --commission-rate="0.05" \\ 
---commission-max="0.20" \\ 
+--commission-max-rate="0.20" \\ 
 --commission-max-change-rate="0.01" \\ 
---min-self-delegation="1000000ubir" \\ 
+--min-self-delegation="1000000" \\ 
 --gas="auto" \\ 
 --gas-prices="0.0025ubir" \\ 
 --gas-adjustment="1.75" \\ 
