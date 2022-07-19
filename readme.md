@@ -72,9 +72,25 @@ chain-id = "oasis-1"
 
 ### 3. Download the [genesis.json](https://raw.githubusercontent.com/cdbo/cdnode/master/genesis.json) file to your [config](#config) folder  
 
+StateSync is enabled on the public RPC server and can dramatically speed up catch-up time to the latest block.  
+It can be enabled by modifying some config parameters before starting the `cdnoded`.  
+Here are the changes required to enable StateSync catch-up:  
+```bash
+# config.toml
+
+[statesync]
+
+enable = true
+rpc_servers = "https://chaos-rpc.cryptodollar.dev:443,http://167.99.177.244:26657"
+trust_height = <insert previous block height which is a factor of 500>
+trust_hash = <insert block hash of that block height>
+
+```
+
 ### 4. `cdnoded start`  
 
 At this point, your node will start synchronizing with the existing network and catch up on blocks. This might take a while. You can verify the state of your node with the following command: `cdnoded status`, look for the `catching_up` property; once `false`, that means you are in sync with the rest of the chain.  
+
 
 It is recommended to run the this binary as a daemon like systemd. Here is an example of a `/etc/systemd/system/cdnode.service`:  
 _replace $USER with your username and $GOBIN with the path where `cdnoded` is installed._
