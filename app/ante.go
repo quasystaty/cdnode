@@ -9,6 +9,7 @@ import (
 
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
 	wasmTypes "github.com/CosmWasm/wasmd/x/wasm/types"
+	permgovkeeper "github.com/cdbo/cdnode/x/permgov/keeper"
 )
 
 // HandlerOptions extend the SDK's AnteHandler options by requiring the IBC
@@ -17,6 +18,7 @@ type HandlerOptions struct {
 	ante.HandlerOptions
 
 	IBCKeeper         *keeper.Keeper
+	PermgovKeeper     permgovkeeper.Keeper
 	WasmConfig        *wasmTypes.WasmConfig
 	TXCounterStoreKey sdk.StoreKey
 }
@@ -46,6 +48,7 @@ func NewAnteHandler(options HandlerOptions) (sdk.AnteHandler, error) {
 	anteDecorators := []sdk.AnteDecorator{
 		ante.NewSetUpContextDecorator(), // outermost AnteDecorator. SetUpContext must be called first
 		wasmkeeper.NewLimitSimulationGasDecorator(options.WasmConfig.SimulationGasLimit), // after setup context to enforce limits early
+		permgovkeeper.NewPermissionnedGovDecorator(options.PermgovKeeper),
 		wasmkeeper.NewCountTXDecorator(options.TXCounterStoreKey),
 		ante.NewRejectExtensionOptionsDecorator(),
 		ante.NewMempoolFeeDecorator(),
