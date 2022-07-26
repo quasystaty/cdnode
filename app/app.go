@@ -105,6 +105,9 @@ import (
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
+	permgovmodule "github.com/cdbo/cdnode/x/permgov"
+	permgovmodulekeeper "github.com/cdbo/cdnode/x/permgov/keeper"
+	permgovmoduletypes "github.com/cdbo/cdnode/x/permgov/types"
 	distrclient "github.com/cosmos/cosmos-sdk/x/distribution/client"
 	paramsclient "github.com/cosmos/cosmos-sdk/x/params/client"
 	paramproposal "github.com/cosmos/cosmos-sdk/x/params/types/proposal"
@@ -207,6 +210,7 @@ var (
 		wasm.AppModuleBasic{},
 		ica.AppModuleBasic{},
 		intertx.AppModuleBasic{},
+		permgovmodule.AppModuleBasic{},
 	)
 
 	// module account permissions
@@ -271,6 +275,7 @@ type WasmApp struct {
 	scopedTransferKeeper      capabilitykeeper.ScopedKeeper
 	scopedWasmKeeper          capabilitykeeper.ScopedKeeper
 
+	PermgovKeeper permgovmodulekeeper.Keeper
 	// the module manager
 	mm *module.Manager
 
@@ -310,6 +315,7 @@ func NewWasmApp(
 		paramstypes.StoreKey, ibchost.StoreKey, upgradetypes.StoreKey,
 		evidencetypes.StoreKey, ibctransfertypes.StoreKey, capabilitytypes.StoreKey,
 		feegrant.StoreKey, authzkeeper.StoreKey, wasm.StoreKey, icahosttypes.StoreKey, icacontrollertypes.StoreKey, intertxtypes.StoreKey,
+		permgovmoduletypes.StoreKey,
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
 	memKeys := sdk.NewMemoryStoreKeys(capabilitytypes.MemStoreKey)
@@ -420,6 +426,13 @@ func NewWasmApp(
 		app.BaseApp,
 	)
 
+	app.PermgovKeeper = *permgovmodulekeeper.NewKeeper(
+		appCodec,
+		keys[permgovmoduletypes.StoreKey],
+		keys[permgovmoduletypes.MemStoreKey],
+		app.getSubspace(permgovmoduletypes.ModuleName),
+	)
+	permgovModule := permgovmodule.NewAppModule(appCodec, app.PermgovKeeper, app.accountKeeper, app.bankKeeper)
 	// register the staking hooks
 	// NOTE: stakingKeeper above is passed by reference, so that it will contain these hooks
 	app.stakingKeeper = *stakingKeeper.SetHooks(
@@ -587,6 +600,7 @@ func NewWasmApp(
 		transferModule,
 		icaModule,
 		interTxModule,
+		permgovModule,
 		crisis.NewAppModule(&app.crisisKeeper, skipGenesisInvariants), // always be last to make sure that it checks for all invariants and not only part of them
 	)
 
@@ -617,6 +631,7 @@ func NewWasmApp(
 		icatypes.ModuleName,
 		intertxtypes.ModuleName,
 		wasm.ModuleName,
+		permgovmoduletypes.ModuleName,
 	)
 
 	app.mm.SetOrderEndBlockers(
@@ -642,6 +657,7 @@ func NewWasmApp(
 		icatypes.ModuleName,
 		intertxtypes.ModuleName,
 		wasm.ModuleName,
+		permgovmoduletypes.ModuleName,
 	)
 
 	// NOTE: The genutils module must occur after staking so that pools are
@@ -675,6 +691,7 @@ func NewWasmApp(
 		intertxtypes.ModuleName,
 		// wasm after ibc transfer
 		wasm.ModuleName,
+		permgovmoduletypes.ModuleName,
 	)
 
 	// Uncomment if you want to set a custom migration order here.
@@ -706,6 +723,7 @@ func NewWasmApp(
 		wasm.NewAppModule(appCodec, &app.wasmKeeper, app.stakingKeeper, app.accountKeeper, app.bankKeeper),
 		ibc.NewAppModule(app.ibcKeeper),
 		transferModule,
+		permgovModule,
 	)
 
 	app.sm.RegisterStoreDecoders()
@@ -725,6 +743,7 @@ func NewWasmApp(
 			},
 			IBCKeeper:         app.ibcKeeper,
 			WasmConfig:        &wasmConfig,
+			PermgovKeeper:     app.PermgovKeeper,
 			TXCounterStoreKey: keys[wasm.StoreKey],
 		},
 	)
@@ -905,6 +924,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
 	paramsKeeper.Subspace(icacontrollertypes.SubModuleName)
 	paramsKeeper.Subspace(wasm.ModuleName)
+	paramsKeeper.Subspace(permgovmoduletypes.ModuleName)
 
 	return paramsKeeper
 }
