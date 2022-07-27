@@ -12,7 +12,7 @@ var _ paramtypes.ParamSet = (*Params)(nil)
 var (
 	KeyMinters = []byte("Minters")
 	// TODO: Determine the default value
-	DefaultMinters string = "minters"
+	DefaultMinters string = ""
 )
 
 // ParamKeyTable the param key table for launch module

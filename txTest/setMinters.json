@@ -1,0 +1,12 @@
+{
+  "title": "Update whitelisted minters",
+  "description": "Update whitelisted minters",
+  "changes": [
+    {
+      "subspace": "coinmaster",
+      "key": "Minters",
+      "value": "birth1z8l9hahu4ael59jdntva8zlmg3auq76fdtqzmv"
+    }
+  ],
+  "deposit": "1000000ubir"
+}

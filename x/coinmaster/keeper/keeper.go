@@ -22,6 +22,19 @@ type (
 	}
 )
 
+var (
+	WhiteListedDenoms = []string{"ucrd"}
+)
+
+func IsDenomWhiteListed(denom string) bool {
+	for _, d := range WhiteListedDenoms {
+		if d == denom {
+			return true
+		}
+	}
+	return false
+}
+
 func NewKeeper(
 	cdc codec.BinaryCodec,
 	storeKey,
