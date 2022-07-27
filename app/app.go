@@ -105,6 +105,9 @@ import (
 	"github.com/CosmWasm/wasmd/x/wasm"
 	wasmclient "github.com/CosmWasm/wasmd/x/wasm/client"
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
+	coinmastermodule "github.com/cdbo/cdnode/x/coinmaster"
+	coinmastermodulekeeper "github.com/cdbo/cdnode/x/coinmaster/keeper"
+	coinmastermoduletypes "github.com/cdbo/cdnode/x/coinmaster/types"
 	permgovmodule "github.com/cdbo/cdnode/x/permgov"
 	permgovmodulekeeper "github.com/cdbo/cdnode/x/permgov/keeper"
 	permgovmoduletypes "github.com/cdbo/cdnode/x/permgov/types"
@@ -211,19 +214,21 @@ var (
 		ica.AppModuleBasic{},
 		intertx.AppModuleBasic{},
 		permgovmodule.AppModuleBasic{},
+		coinmastermodule.AppModuleBasic{},
 	)
 
 	// module account permissions
 	maccPerms = map[string][]string{
-		authtypes.FeeCollectorName:     nil,
-		distrtypes.ModuleName:          nil,
-		minttypes.ModuleName:           {authtypes.Minter},
-		stakingtypes.BondedPoolName:    {authtypes.Burner, authtypes.Staking},
-		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
-		govtypes.ModuleName:            {authtypes.Burner},
-		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
-		icatypes.ModuleName:            nil,
-		wasm.ModuleName:                {authtypes.Burner},
+		authtypes.FeeCollectorName:       nil,
+		distrtypes.ModuleName:            nil,
+		minttypes.ModuleName:             {authtypes.Minter},
+		stakingtypes.BondedPoolName:      {authtypes.Burner, authtypes.Staking},
+		stakingtypes.NotBondedPoolName:   {authtypes.Burner, authtypes.Staking},
+		govtypes.ModuleName:              {authtypes.Burner},
+		ibctransfertypes.ModuleName:      {authtypes.Minter, authtypes.Burner},
+		icatypes.ModuleName:              nil,
+		wasm.ModuleName:                  {authtypes.Burner},
+		coinmastermoduletypes.ModuleName: {authtypes.Minter, authtypes.Burner, authtypes.Staking},
 	}
 )
 
@@ -275,7 +280,8 @@ type WasmApp struct {
 	scopedTransferKeeper      capabilitykeeper.ScopedKeeper
 	scopedWasmKeeper          capabilitykeeper.ScopedKeeper
 
-	PermgovKeeper permgovmodulekeeper.Keeper
+	PermgovKeeper    permgovmodulekeeper.Keeper
+	CoinmasterKeeper coinmastermodulekeeper.Keeper
 	// the module manager
 	mm *module.Manager
 
@@ -316,6 +322,7 @@ func NewWasmApp(
 		evidencetypes.StoreKey, ibctransfertypes.StoreKey, capabilitytypes.StoreKey,
 		feegrant.StoreKey, authzkeeper.StoreKey, wasm.StoreKey, icahosttypes.StoreKey, icacontrollertypes.StoreKey, intertxtypes.StoreKey,
 		permgovmoduletypes.StoreKey,
+		coinmastermoduletypes.StoreKey,
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
 	memKeys := sdk.NewMemoryStoreKeys(capabilitytypes.MemStoreKey)
@@ -433,6 +440,17 @@ func NewWasmApp(
 		app.getSubspace(permgovmoduletypes.ModuleName),
 	)
 	permgovModule := permgovmodule.NewAppModule(appCodec, app.PermgovKeeper, app.accountKeeper, app.bankKeeper)
+
+	app.CoinmasterKeeper = *coinmastermodulekeeper.NewKeeper(
+		appCodec,
+		keys[coinmastermoduletypes.StoreKey],
+		keys[coinmastermoduletypes.MemStoreKey],
+		app.getSubspace(coinmastermoduletypes.ModuleName),
+
+		app.bankKeeper,
+	)
+	coinmasterModule := coinmastermodule.NewAppModule(appCodec, app.CoinmasterKeeper, app.accountKeeper, app.bankKeeper)
+
 	// register the staking hooks
 	// NOTE: stakingKeeper above is passed by reference, so that it will contain these hooks
 	app.stakingKeeper = *stakingKeeper.SetHooks(
@@ -601,6 +619,7 @@ func NewWasmApp(
 		icaModule,
 		interTxModule,
 		permgovModule,
+		coinmasterModule,
 		crisis.NewAppModule(&app.crisisKeeper, skipGenesisInvariants), // always be last to make sure that it checks for all invariants and not only part of them
 	)
 
@@ -632,6 +651,7 @@ func NewWasmApp(
 		intertxtypes.ModuleName,
 		wasm.ModuleName,
 		permgovmoduletypes.ModuleName,
+		coinmastermoduletypes.ModuleName,
 	)
 
 	app.mm.SetOrderEndBlockers(
@@ -658,6 +678,7 @@ func NewWasmApp(
 		intertxtypes.ModuleName,
 		wasm.ModuleName,
 		permgovmoduletypes.ModuleName,
+		coinmastermoduletypes.ModuleName,
 	)
 
 	// NOTE: The genutils module must occur after staking so that pools are
@@ -692,6 +713,7 @@ func NewWasmApp(
 		// wasm after ibc transfer
 		wasm.ModuleName,
 		permgovmoduletypes.ModuleName,
+		coinmastermoduletypes.ModuleName,
 	)
 
 	// Uncomment if you want to set a custom migration order here.
@@ -724,6 +746,7 @@ func NewWasmApp(
 		ibc.NewAppModule(app.ibcKeeper),
 		transferModule,
 		permgovModule,
+		coinmasterModule,
 	)
 
 	app.sm.RegisterStoreDecoders()
@@ -925,6 +948,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(icacontrollertypes.SubModuleName)
 	paramsKeeper.Subspace(wasm.ModuleName)
 	paramsKeeper.Subspace(permgovmoduletypes.ModuleName)
+	paramsKeeper.Subspace(coinmastermoduletypes.ModuleName)
 
 	return paramsKeeper
 }
