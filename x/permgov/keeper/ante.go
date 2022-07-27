@@ -18,6 +18,9 @@ func NewPermissionnedGovDecorator(kpr Keeper) PermissionnedGovDecorator {
 }
 
 func (ante PermissionnedGovDecorator) AnteHandle(ctx sdk.Context, tx sdk.Tx, simulate bool, next sdk.AnteHandler) (sdk.Context, error) {
+	if ctx.BlockHeight() < 1 {
+		return next(ctx, tx, simulate)
+	}
 	governor := ante.keeper.Governor(ctx)
 	// Bypass the AnteHandler if the governor is not set
 	if governor == permgovtypes.DefaultGovernor {
