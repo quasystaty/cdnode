@@ -307,6 +307,14 @@ func NewWasmApp(
 	wasmOpts []wasm.Option,
 	baseAppOptions ...func(*baseapp.BaseApp),
 ) *WasmApp {
+	/**
+	 * Change MaxWasmSize to the maximum size of the wasm code that can be deployed in bytes.
+	 * The default value is 800k.
+	 *
+	 * Make sure to also change the value of "max_body_bytes" in the node's config.toml.
+	 **/
+	// wasmtypes.MaxWasmSize = 2097152
+
 	appCodec, legacyAmino := encodingConfig.Marshaler, encodingConfig.Amino
 	interfaceRegistry := encodingConfig.InterfaceRegistry
 
