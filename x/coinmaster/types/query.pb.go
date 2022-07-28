@@ -114,8 +114,8 @@ func (m *QueryParamsResponse) GetParams() Params {
 }
 
 func init() {
-	proto.RegisterType((*QueryParamsRequest)(nil), "github.com/cdbo/cdnode.coinmaster.QueryParamsRequest")
-	proto.RegisterType((*QueryParamsResponse)(nil), "github.com/cdbo/cdnode.coinmaster.QueryParamsResponse")
+	proto.RegisterType((*QueryParamsRequest)(nil), "cdnode.coinmaster.QueryParamsRequest")
+	proto.RegisterType((*QueryParamsResponse)(nil), "cdnode.coinmaster.QueryParamsResponse")
 }
 
 func init() { proto.RegisterFile("coinmaster/query.proto", fileDescriptor_8a78827f02208a3b) }
@@ -168,7 +168,7 @@ func NewQueryClient(cc grpc1.ClientConn) QueryClient {
 
 func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error) {
 	out := new(QueryParamsResponse)
-	err := c.cc.Invoke(ctx, "/github.com/cdbo/cdnode.coinmaster.Query/Params", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cdnode.coinmaster.Query/Params", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -203,7 +203,7 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/github.com/cdbo/cdnode.coinmaster.Query/Params",
+		FullMethod: "/cdnode.coinmaster.Query/Params",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QueryServer).Params(ctx, req.(*QueryParamsRequest))
@@ -212,7 +212,7 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 }
 
 var _Query_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "github.com/cdbo/cdnode.coinmaster.Query",
+	ServiceName: "cdnode.coinmaster.Query",
 	HandlerType: (*QueryServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

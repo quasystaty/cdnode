@@ -69,7 +69,7 @@ func (m *GenesisState) GetParams() Params {
 }
 
 func init() {
-	proto.RegisterType((*GenesisState)(nil), "github.com/cdbo/cdnode.coinmaster.GenesisState")
+	proto.RegisterType((*GenesisState)(nil), "cdnode.coinmaster.GenesisState")
 }
 
 func init() { proto.RegisterFile("coinmaster/genesis.proto", fileDescriptor_a4187e63762b6973) }

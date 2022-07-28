@@ -206,10 +206,10 @@ func (m *MsgBurnResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_MsgBurnResponse proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*MsgMint)(nil), "github.com/cdbo/cdnode.coinmaster.MsgMint")
-	proto.RegisterType((*MsgMintResponse)(nil), "github.com/cdbo/cdnode.coinmaster.MsgMintResponse")
-	proto.RegisterType((*MsgBurn)(nil), "github.com/cdbo/cdnode.coinmaster.MsgBurn")
-	proto.RegisterType((*MsgBurnResponse)(nil), "github.com/cdbo/cdnode.coinmaster.MsgBurnResponse")
+	proto.RegisterType((*MsgMint)(nil), "cdnode.coinmaster.MsgMint")
+	proto.RegisterType((*MsgMintResponse)(nil), "cdnode.coinmaster.MsgMintResponse")
+	proto.RegisterType((*MsgBurn)(nil), "cdnode.coinmaster.MsgBurn")
+	proto.RegisterType((*MsgBurnResponse)(nil), "cdnode.coinmaster.MsgBurnResponse")
 }
 
 func init() { proto.RegisterFile("coinmaster/tx.proto", fileDescriptor_2f68783d02bba24b) }
@@ -262,7 +262,7 @@ func NewMsgClient(cc grpc1.ClientConn) MsgClient {
 
 func (c *msgClient) Mint(ctx context.Context, in *MsgMint, opts ...grpc.CallOption) (*MsgMintResponse, error) {
 	out := new(MsgMintResponse)
-	err := c.cc.Invoke(ctx, "/github.com/cdbo/cdnode.coinmaster.Msg/Mint", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cdnode.coinmaster.Msg/Mint", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -271,7 +271,7 @@ func (c *msgClient) Mint(ctx context.Context, in *MsgMint, opts ...grpc.CallOpti
 
 func (c *msgClient) Burn(ctx context.Context, in *MsgBurn, opts ...grpc.CallOption) (*MsgBurnResponse, error) {
 	out := new(MsgBurnResponse)
-	err := c.cc.Invoke(ctx, "/github.com/cdbo/cdnode.coinmaster.Msg/Burn", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cdnode.coinmaster.Msg/Burn", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -309,7 +309,7 @@ func _Msg_Mint_Handler(srv interface{}, ctx context.Context, dec func(interface{
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/github.com/cdbo/cdnode.coinmaster.Msg/Mint",
+		FullMethod: "/cdnode.coinmaster.Msg/Mint",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).Mint(ctx, req.(*MsgMint))
@@ -327,7 +327,7 @@ func _Msg_Burn_Handler(srv interface{}, ctx context.Context, dec func(interface{
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/github.com/cdbo/cdnode.coinmaster.Msg/Burn",
+		FullMethod: "/cdnode.coinmaster.Msg/Burn",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).Burn(ctx, req.(*MsgBurn))
@@ -336,7 +336,7 @@ func _Msg_Burn_Handler(srv interface{}, ctx context.Context, dec func(interface{
 }
 
 var _Msg_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "github.com/cdbo/cdnode.coinmaster.Msg",
+	ServiceName: "cdnode.coinmaster.Msg",
 	HandlerType: (*MsgServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

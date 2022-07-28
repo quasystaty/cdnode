@@ -68,7 +68,7 @@ func (m *Params) GetMinters() string {
 }
 
 func init() {
-	proto.RegisterType((*Params)(nil), "github.com/cdbo/cdnode.coinmaster.Params")
+	proto.RegisterType((*Params)(nil), "cdnode.coinmaster.Params")
 }
 
 func init() { proto.RegisterFile("coinmaster/params.proto", fileDescriptor_05d237d74ad514c8) }
