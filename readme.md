@@ -197,6 +197,15 @@ cdnoded tx coinmaster burn \\
 --chain-id="oasis-1"
 ```
 
+# Permissionned Governance
+
+The **Permgov** module allows on-chain governance to be executed by a whitelisted address.
+
+Instead of modifying the native `gov` module to support governance, `permgov` simply intercepts `submit-proposal` and `vote` transactions and only allows the whitelisted address to execute them.  
+The whitelisted address is called the **Governor** and is a parameter of the `permgov` module.
+
+The default value of the governor is an empty string, which allows anyone to submit proposals and vote.  
+
 <br />
 <br />
 <br />
