@@ -1,6 +1,7 @@
 // THIS FILE IS GENERATED AUTOMATICALLY. DO NOT MODIFY.
 
 import CdboCdnodeCdboCdnodeCdnode from './cdbo/cdnode/cdbo.cdnode.cdnode'
+import CdboCdnodeCdboCdnodeCoinmaster from './cdbo/cdnode/cdbo.cdnode.coinmaster'
 import CdboCdnodeCdboCdnodePermgov from './cdbo/cdnode/cdbo.cdnode.permgov'
 import CosmosCosmosSdkCosmosAuthV1Beta1 from './cosmos/cosmos-sdk/cosmos.auth.v1beta1'
 import CosmosCosmosSdkCosmosBankV1Beta1 from './cosmos/cosmos-sdk/cosmos.bank.v1beta1'
@@ -26,6 +27,7 @@ import CosmosIbcGoIbcCorePortV1 from './cosmos/ibc-go/ibc.core.port.v1'
 
 export default { 
   CdboCdnodeCdboCdnodeCdnode: load(CdboCdnodeCdboCdnodeCdnode, 'cdbo.cdnode.cdnode'),
+  CdboCdnodeCdboCdnodeCoinmaster: load(CdboCdnodeCdboCdnodeCoinmaster, 'cdbo.cdnode.coinmaster'),
   CdboCdnodeCdboCdnodePermgov: load(CdboCdnodeCdboCdnodePermgov, 'cdbo.cdnode.permgov'),
   CosmosCosmosSdkCosmosAuthV1Beta1: load(CosmosCosmosSdkCosmosAuthV1Beta1, 'cosmos.auth.v1beta1'),
   CosmosCosmosSdkCosmosBankV1Beta1: load(CosmosCosmosSdkCosmosBankV1Beta1, 'cosmos.bank.v1beta1'),
