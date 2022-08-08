@@ -6,9 +6,9 @@ The layer 1 Cosmos blockchain for the Crypto Dollar
 
 ### [testnet]
 
-- Staking denom: `ubir`
+- Staking denom: `unoria`
 - Denom exponent: `6`
-- Wallet prefix: `birth`
+- Wallet prefix: `noria`
 - Average block speed: `5s`
 - Public RPC: [https://chaos-rpc.cryptodollar.dev](https://chaos-rpc.cryptodollar.dev)
 - Public LCD: [https://chaos-lcd.cryptodollar.dev](https://chaos-lcd.cryptodollar.dev)
@@ -17,12 +17,13 @@ The layer 1 Cosmos blockchain for the Crypto Dollar
 
 # Chain Specs
 
-- Governance disabled
+- Permissionned governance by whitelisted account
 - Automatic minting disabled
+- Manual minting/burning of custom denoms by whitelisted minters
 - CosmWasm 1.0.0 enabled
 - IBC enabled
 - Interchain Accounts enabled
-- Staking denom `ubir` total supply: `1B`
+- Staking denom `unoria` total supply: `1B`
 
 # Install
 
@@ -44,7 +45,7 @@ Read through [init_local.sh](init_local.sh) for more details.
 
 # Running a node
 
-### 1. `cdnoded init <moniker> --chain-id oasis-1`
+### 1. `cdnoded init <moniker> --chain-id oasis-2`
 
 Moniker is your node name.
 
@@ -57,7 +58,7 @@ Moniker is your node name.
 `app.toml`
 
 ```bash
-minimum-gas-prices = "0.0025ubir"
+minimum-gas-prices = "0.0025unoria"
 ```
 
 `config.toml`
@@ -70,7 +71,7 @@ persistent_peers = "d9f121783c3e80c0e2c98da9f9c33cf5838a49c1@167.99.177.244:2665
 `client.toml`
 
 ```bash
-chain-id = "oasis-1"
+chain-id = "oasis-2"
 ```
 
 ### 3. Download the [genesis.json](https://raw.githubusercontent.com/cdbo/cdnode/master/genesis.json) file to your [config](#config) folder
@@ -128,16 +129,16 @@ with `cdnoded keys list`. If you don't, add one: `cdnoded keys add <wallet name>
 
 ```bash
 cdnoded tx staking create-validator \\
---amount="1000000000ubir" \\
+--amount="1000000000unoria" \\
 --pubkey=$(cdnoded tendermint show-validator) \\
 --moniker="My Node" \\
---chain-id="oasis-1" \\
+--chain-id="oasis-2" \\
 --commission-rate="0.05" \\
 --commission-max-rate="0.20" \\
 --commission-max-change-rate="0.01" \\
 --min-self-delegation="1000000" \\
 --gas="auto" \\
---gas-prices="0.0025ubir" \\
+--gas-prices="0.0025unoria" \\
 --gas-adjustment="1.75" \\
 --from="myWalletName" \\
 ```
@@ -162,10 +163,10 @@ The **Coinmaster** module has two guards in place:
     {
       "subspace": "coinmaster",
       "key": "Denoms",
-      "value": "ucrd,ubir,nwbtc"
+      "value": "ucrd,unoria,nwbtc"
     }
   ],
-  "deposit": "1000000ubir"
+  "deposit": "1000000unoria"
 }
 ```
 
@@ -179,10 +180,10 @@ The **Coinmaster** module has two guards in place:
     {
       "subspace": "coinmaster",
       "key": "Minters",
-      "value": "birth1qrh465lh5ygkaqu0nc2wdxfv5nkmwl3xlqf7jl"
+      "value": "noria1qrh465lh5ygkaqu0nc2wdxfv5nkmwl3xlqf7jl"
     }
   ],
-  "deposit": "1000000ubir"
+  "deposit": "1000000unoria"
 }
 ```
 
@@ -196,9 +197,9 @@ cdnoded tx coinmaster mint \\
 --amount="1000000ucrd" \\
 --from="myWalletName" \\
 --gas="auto" \\
---gas-prices="0.0025ubir" \\
+--gas-prices="0.0025unoria" \\
 --gas-adjustment="1.75" \\
---chain-id="oasis-1"
+--chain-id="oasis-2"
 ```
 
 ### Burning
@@ -208,9 +209,9 @@ cdnoded tx coinmaster burn \\
 --amount="1000000ucrd" \\
 --from="myWalletName" \\
 --gas="auto" \\
---gas-prices="0.0025ubir" \\
+--gas-prices="0.0025unoria" \\
 --gas-adjustment="1.75" \\
---chain-id="oasis-1"
+--chain-id="oasis-2"
 ```
 
 # Permissionned Governance
