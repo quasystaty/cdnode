@@ -26,13 +26,17 @@ var (
 	WhiteListedDenoms = []string{"ucrd"}
 )
 
-func IsDenomWhiteListed(denom string) bool {
-	for _, d := range WhiteListedDenoms {
-		if d == denom {
-			return true
+func IsDenomWhiteListed(denoms []string, denom string) bool {
+	if len(denoms) == 0 || len(denoms) == 1 && denoms[0] == "" {
+		return true
+	} else {
+		for _, d := range denoms {
+			if d == denom {
+				return true
+			}
 		}
+		return false
 	}
-	return false
 }
 
 func NewKeeper(

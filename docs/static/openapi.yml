@@ -56,6 +56,8 @@ paths:
                 properties:
                   minters:
                     type: string
+                  denoms:
+                    type: string
             description: >-
               QueryParamsResponse is response type for the Query/Params RPC
               method.
@@ -30164,6 +30166,8 @@ definitions:
     properties:
       minters:
         type: string
+      denoms:
+        type: string
     description: Params defines the parameters for the module.
   cdbo.cdnode.coinmaster.QueryParamsResponse:
     type: object
@@ -30173,6 +30177,8 @@ definitions:
         type: object
         properties:
           minters:
+            type: string
+          denoms:
             type: string
     description: QueryParamsResponse is response type for the Query/Params RPC method.
   cosmos.base.v1beta1.Coin:

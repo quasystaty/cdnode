@@ -18,6 +18,7 @@ export type CoinmasterMsgMintResponse = object;
  */
 export interface CoinmasterParams {
   minters?: string;
+  denoms?: string;
 }
 
 /**

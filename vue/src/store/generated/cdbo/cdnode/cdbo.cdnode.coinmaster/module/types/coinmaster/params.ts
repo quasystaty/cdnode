@@ -6,14 +6,18 @@ export const protobufPackage = "cdbo.cdnode.coinmaster";
 /** Params defines the parameters for the module. */
 export interface Params {
   minters: string;
+  denoms: string;
 }
 
-const baseParams: object = { minters: "" };
+const baseParams: object = { minters: "", denoms: "" };
 
 export const Params = {
   encode(message: Params, writer: Writer = Writer.create()): Writer {
     if (message.minters !== "") {
       writer.uint32(10).string(message.minters);
+    }
+    if (message.denoms !== "") {
+      writer.uint32(18).string(message.denoms);
     }
     return writer;
   },
@@ -27,6 +31,9 @@ export const Params = {
       switch (tag >>> 3) {
         case 1:
           message.minters = reader.string();
+          break;
+        case 2:
+          message.denoms = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -43,12 +50,18 @@ export const Params = {
     } else {
       message.minters = "";
     }
+    if (object.denoms !== undefined && object.denoms !== null) {
+      message.denoms = String(object.denoms);
+    } else {
+      message.denoms = "";
+    }
     return message;
   },
 
   toJSON(message: Params): unknown {
     const obj: any = {};
     message.minters !== undefined && (obj.minters = message.minters);
+    message.denoms !== undefined && (obj.denoms = message.denoms);
     return obj;
   },
 
@@ -58,6 +71,11 @@ export const Params = {
       message.minters = object.minters;
     } else {
       message.minters = "";
+    }
+    if (object.denoms !== undefined && object.denoms !== null) {
+      message.denoms = object.denoms;
+    } else {
+      message.denoms = "";
     }
     return message;
   },

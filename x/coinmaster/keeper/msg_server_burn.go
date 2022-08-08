@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 	"errors"
+	"strings"
 
 	"github.com/cdbo/cdnode/x/coinmaster/types"
 
@@ -21,7 +22,8 @@ func (k msgServer) Burn(goCtx context.Context, msg *types.MsgBurn) (*types.MsgBu
 
 	coins := sdk.NewCoins(msg.Amount)
 
-	if !IsDenomWhiteListed(coins[0].Denom) {
+	denoms := strings.Split(k.Denoms(ctx), ",")
+	if !IsDenomWhiteListed(denoms, coins[0].Denom) {
 		return nil, errors.New("unauthorized denom")
 	}
 

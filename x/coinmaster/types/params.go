@@ -10,9 +10,10 @@ import (
 var _ paramtypes.ParamSet = (*Params)(nil)
 
 var (
-	KeyMinters = []byte("Minters")
-	// TODO: Determine the default value
+	KeyMinters            = []byte("Minters")
+	KeyDenoms             = []byte("Denoms")
 	DefaultMinters string = ""
+	DefaultDenoms  string = ""
 )
 
 // ParamKeyTable the param key table for launch module
@@ -23,9 +24,11 @@ func ParamKeyTable() paramtypes.KeyTable {
 // NewParams creates a new Params instance
 func NewParams(
 	minters string,
+	denoms string,
 ) Params {
 	return Params{
 		Minters: minters,
+		Denoms:  denoms,
 	}
 }
 
@@ -33,6 +36,7 @@ func NewParams(
 func DefaultParams() Params {
 	return NewParams(
 		DefaultMinters,
+		DefaultDenoms,
 	)
 }
 
@@ -40,12 +44,16 @@ func DefaultParams() Params {
 func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
 	return paramtypes.ParamSetPairs{
 		paramtypes.NewParamSetPair(KeyMinters, &p.Minters, validateMinters),
+		paramtypes.NewParamSetPair(KeyDenoms, &p.Denoms, validateDenoms),
 	}
 }
 
 // Validate validates the set of params
 func (p Params) Validate() error {
 	if err := validateMinters(p.Minters); err != nil {
+		return err
+	}
+	if err := validateDenoms(p.Denoms); err != nil {
 		return err
 	}
 
@@ -67,6 +75,19 @@ func validateMinters(v interface{}) error {
 
 	// TODO implement validation
 	_ = minters
+
+	return nil
+}
+
+// validateDenoms validates the Denoms param
+func validateDenoms(v interface{}) error {
+	denoms, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("invalid parameter type: %T", v)
+	}
+
+	// TODO implement validation
+	_ = denoms
 
 	return nil
 }
