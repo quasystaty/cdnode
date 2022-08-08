@@ -152,7 +152,23 @@ The **Coinmaster** module allows the minting and burning of whitelisted native c
 
 The **Coinmaster** module has two guards in place:
 
-- Whitelisted denominations. You can only mint/burn whitelisted denoms. The initial whitelist is set to `[ucrd]`.
+- Whitelisted denominations. You can only mint/burn whitelisted denoms. The initial whitelist is set to an empty string, which allows minting and burning any denomination. This can be changed through governance with a `param-change` proposal such as:
+
+```bash
+{
+  "title": "Update whitelisted denominations",
+  "description": "Update whitelisted denominations",
+  "changes": [
+    {
+      "subspace": "coinmaster",
+      "key": "Denoms",
+      "value": "ucrd,ubir,nwbtc"
+    }
+  ],
+  "deposit": "1000000ubir"
+}
+```
+
 - Whitelisted minters. Only Minters are allowed to mint/burn coins. This can be changed through governance with a `param-change` proposal such as:
 
 ```bash
@@ -170,7 +186,7 @@ The **Coinmaster** module has two guards in place:
 }
 ```
 
-In its current implemnentation, the module only supports 1 minter, but this can be changed in the future to allow more minters.  
+In its current implementation, the module only supports 1 minter, but this can be changed in the future to allow more minters.  
 The default value of the minter is an empty string, which allows anyone to mint/burn.
 
 ### Minting
