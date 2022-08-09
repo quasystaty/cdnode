@@ -61,3 +61,6 @@ genesis:
     staking:
       params:
         bond_denom: "unoria"
+    distribution:
+      params:
+        community_tax: "0.0"
