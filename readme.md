@@ -65,7 +65,7 @@ minimum-gas-prices = "0.0025unoria"
 
 ```bash
 moniker = "moniker_entered_at_step_1"
-persistent_peers = "d9f121783c3e80c0e2c98da9f9c33cf5838a49c1@167.99.177.244:26656"
+persistent_peers = "5dc187550a021298f88c3e5905c7dbdd790ff040@167.99.177.244:26656"
 ```
 
 `client.toml`
