@@ -22,10 +22,6 @@ type (
 	}
 )
 
-var (
-	WhiteListedDenoms = []string{"ucrd"}
-)
-
 func IsDenomWhiteListed(denoms []string, denom string) bool {
 	if len(denoms) == 0 || len(denoms) == 1 && denoms[0] == "" {
 		return true

@@ -108,6 +108,7 @@ import (
 	coinmastermodule "github.com/cdbo/cdnode/x/coinmaster"
 	coinmastermodulekeeper "github.com/cdbo/cdnode/x/coinmaster/keeper"
 	coinmastermoduletypes "github.com/cdbo/cdnode/x/coinmaster/types"
+	coinmastermodulewasm "github.com/cdbo/cdnode/x/coinmaster/wasm"
 	permgovmodule "github.com/cdbo/cdnode/x/permgov"
 	permgovmodulekeeper "github.com/cdbo/cdnode/x/permgov/keeper"
 	permgovmoduletypes "github.com/cdbo/cdnode/x/permgov/types"
@@ -547,7 +548,12 @@ func NewWasmApp(
 
 	// The last arguments can contain custom message handlers, and custom query handlers,
 	// if we want to allow any custom callbacks
-	supportedFeatures := "iterator,staking,stargate"
+	supportedFeatures := "iterator,staking,stargate,coinmaster"
+
+	encoders := wasmkeeper.DefaultEncoders(appCodec, app.transferKeeper)
+	mergedEncoders := encoders.Merge(coinmastermodulewasm.NewMessageEncoders())
+	wasmOpts = append(wasmOpts, wasmkeeper.WithMessageEncoders(&mergedEncoders))
+
 	app.wasmKeeper = wasm.NewKeeper(
 		appCodec,
 		keys[wasm.StoreKey],
