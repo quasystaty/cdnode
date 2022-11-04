@@ -804,7 +804,18 @@ func NewWasmApp(
 		}
 	}
 
+	// register upgrade
+	app.RegisterUpgradeHandlers(app.configurator)
+
 	return app
+}
+
+// RegisterUpgradeHandlers returns upgrade handlers
+func (app *WasmApp) RegisterUpgradeHandlers(cfg module.Configurator) {
+	app.upgradeKeeper.SetUpgradeHandler(
+		UpgradeName,
+		NewUpgradeHandler(app).CreateUpgradeHandler(),
+	)
 }
 
 // Name returns the name of the App
