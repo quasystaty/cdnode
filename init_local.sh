@@ -54,8 +54,8 @@ sed -i 's/^timeout_commit\ =\ .*/timeout_commit\ =\ \"1s\"/g' ~/.cdnode/config/c
 sed -i "s/^minimum-gas-prices\ =\ .*/minimum-gas-prices\ =\ \"0.0025$DENOM\"/g" ~/.cdnode/config/app.toml > /dev/null 2>&1
 
 # Edit app.toml to enable LCD REST server on port 1317 and REST documentation at http://localhost:1317/swagger/
-sed -i 's/enable\ =\ false/enable\ =\ true/g' ~/.cdnode/config/app.toml > /dev/null 2>&1
-sed -i 's/swagger\ =\ false/swagger\ =\ true/g' ~/.cdnode/config/app.toml > /dev/null 2>&1
+sed -i 's/^enable\ =\ false/enable\ =\ true/g' ~/.cdnode/config/app.toml > /dev/null 2>&1
+sed -i 's/^swagger\ =\ false/swagger\ =\ true/g' ~/.cdnode/config/app.toml > /dev/null 2>&1
 
 . setup_cosmovisor.sh
 

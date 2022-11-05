@@ -52,6 +52,7 @@ genesis:
     mint:
       minter:
         inflation: "0.0"
+        annual_provisions: "0.0"
       params:
         blocks_per_year: "6307200"
         mint_denom: "unoria"

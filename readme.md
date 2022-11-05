@@ -6,6 +6,7 @@ The layer 1 Cosmos blockchain for the Crypto Dollar
 
 ### [testnet]
 
+- Current binary version: v0.5.0  
 - Staking denom: `unoria`
 - Denom exponent: `6`
 - Wallet prefix: `noria`
