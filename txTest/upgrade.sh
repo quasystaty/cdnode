@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HEIGHT=$1
-UPGRADE_NAME="v0.6.0"
+UPGRADE_NAME="v0.7.3"
 BINARY_DIR=".cdnode"
 CHAIN_ID="oasis-2"
 DENOM="unoria"
