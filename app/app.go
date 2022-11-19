@@ -534,7 +534,7 @@ func NewWasmApp(
 
 	// The last arguments can contain custom message handlers, and custom query handlers,
 	// if we want to allow any custom callbacks
-	supportedFeatures := "iterator,staking,stargate,coinmaster"
+	supportedFeatures := "iterator,staking,stargate,coinmaster,cosmwasm_1_1"
 
 	encoders := wasmkeeper.DefaultEncoders(appCodec, app.transferKeeper)
 	mergedEncoders := encoders.Merge(coinmastermodulewasm.NewMessageEncoders())
