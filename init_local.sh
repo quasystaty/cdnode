@@ -59,4 +59,4 @@ sed -i 's/^swagger\ =\ false/swagger\ =\ true/g' ~/.cdnode/config/app.toml > /de
 
 . setup_cosmovisor.sh
 
-echo -e "\n\nYou can now start your chain with 'cdnoded start' or 'cosmovisor start'\n"
+echo -e "\n\nYou can now start your chain with 'cdnoded start' or 'cosmovisor run start'\n"

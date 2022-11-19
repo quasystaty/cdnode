@@ -95,6 +95,10 @@ endif
 install: go.sum 
 	go install -mod=readonly $(BUILD_FLAGS) ./cmd/cdnoded
 
+build:
+	go build $(BUILD_FLAGS) -o ./build/cdnoded ./cmd/cdnoded
+
+
 clean:
 	rm -rf \
     $(BUILDDIR)/ \

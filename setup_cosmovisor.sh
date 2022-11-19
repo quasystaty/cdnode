@@ -3,6 +3,7 @@
 BINARY_DIR=".cdnode"
 export DAEMON_NAME="cdnoded"
 export DAEMON_HOME="$HOME/$BINARY_DIR"
+export DAEMON_ALLOW_DOWNLOAD_BINARIES=true
 
 if ! command -v go &>/dev/null; then
   echo "\n\ngolang could not be found"
