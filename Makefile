@@ -12,7 +12,7 @@ DOCKER := $(shell which docker)
 DOCKER_BUF := $(DOCKER) run --rm -v $(CURDIR):/workspace --workdir /workspace bufbuild/buf
 
 ifneq ($(OS),Windows_NT)
-  UNAME_S = $(shell uname -s)
+	UNAME_S = $(shell uname -s)
 endif
 
 export GO111MODULE = on
@@ -21,29 +21,29 @@ export GO111MODULE = on
 
 build_tags = netgo
 ifeq ($(LEDGER_ENABLED),true)
-  ifeq ($(OS),Windows_NT)
-    GCCEXE = $(shell where gcc.exe 2> NUL)
-    ifeq ($(GCCEXE),)
-      $(error gcc.exe not installed for ledger support, please install or set LEDGER_ENABLED=false)
-    else
-      build_tags += ledger
-    endif
-  else
-    ifeq ($(UNAME_S),OpenBSD)
-      $(warning OpenBSD detected, disabling ledger support (https://github.com/cosmos/cosmos-sdk/issues/1988))
-    else
-      GCC = $(shell command -v gcc 2> /dev/null)
-      ifeq ($(GCC),)
-        $(error gcc not installed for ledger support, please install or set LEDGER_ENABLED=false)
-      else
-        build_tags += ledger
-      endif
-    endif
-  endif
+	ifeq ($(OS),Windows_NT)
+		GCCEXE = $(shell where gcc.exe 2> NUL)
+		ifeq ($(GCCEXE),)
+			$(error gcc.exe not installed for ledger support, please install or set LEDGER_ENABLED=false)
+		else
+			build_tags += ledger
+		endif
+	else
+		ifeq ($(UNAME_S),OpenBSD)
+			$(warning OpenBSD detected, disabling ledger support (https://github.com/cosmos/cosmos-sdk/issues/1988))
+		else
+			GCC = $(shell command -v gcc 2> /dev/null)
+			ifeq ($(GCC),)
+				$(error gcc not installed for ledger support, please install or set LEDGER_ENABLED=false)
+			else
+				build_tags += ledger
+			endif
+		endif
+	endif
 endif
 
 ifeq (cleveldb,$(findstring cleveldb,$(COSMOS_BUILD_OPTIONS)))
-  build_tags += gcc
+	build_tags += gcc
 endif
 build_tags += $(BUILD_TAGS)
 build_tags := $(strip $(build_tags))
@@ -56,32 +56,36 @@ build_tags_comma_sep := $(subst $(whitespace),$(comma),$(build_tags))
 # process linker flags
 
 ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=noria \
-		  -X github.com/cosmos/cosmos-sdk/version.AppName=cdnoded \
-		  -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
-		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
-		  -X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)"
+			-X github.com/cosmos/cosmos-sdk/version.AppName=cdnoded \
+			-X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
+			-X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
+			-X "github.com/cosmos/cosmos-sdk/version.BuildTags=$(build_tags_comma_sep)"
 
 # DB backend selection
 ifeq (cleveldb,$(findstring cleveldb,$(COSMOS_BUILD_OPTIONS)))
-  ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=cleveldb
+	ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=cleveldb
 endif
 ifeq (badgerdb,$(findstring badgerdb,$(COSMOS_BUILD_OPTIONS)))
-  ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=badgerdb
+	ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=badgerdb
 endif
 # handle rocksdb
 ifeq (rocksdb,$(findstring rocksdb,$(COSMOS_BUILD_OPTIONS)))
-  CGO_ENABLED=1
-  BUILD_TAGS += rocksdb
-  ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=rocksdb
+	CGO_ENABLED=1
+	BUILD_TAGS += rocksdb
+	ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=rocksdb
 endif
 # handle boltdb
 ifeq (boltdb,$(findstring boltdb,$(COSMOS_BUILD_OPTIONS)))
-  BUILD_TAGS += boltdb
-  ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=boltdb
+	BUILD_TAGS += boltdb
+	ldflags += -X github.com/cosmos/cosmos-sdk/types.DBBackend=boltdb
+endif
+
+ifeq ($(LINK_STATICALLY),true)
+	ldflags += -linkmode=external -extldflags "-Wl,-z,muldefs -static"
 endif
 
 ifeq (,$(findstring nostrip,$(COSMOS_BUILD_OPTIONS)))
-  ldflags += -w -s
+	ldflags += -w -s
 endif
 ldflags += $(LDFLAGS)
 ldflags := $(strip $(ldflags))
@@ -89,7 +93,7 @@ ldflags := $(strip $(ldflags))
 BUILD_FLAGS := -tags "$(build_tags)" -ldflags '$(ldflags)'
 # check for nostrip option
 ifeq (,$(findstring nostrip,$(COSMOS_BUILD_OPTIONS)))
-  BUILD_FLAGS += -trimpath
+	BUILD_FLAGS += -trimpath
 endif
 
 install: go.sum 
@@ -98,9 +102,16 @@ install: go.sum
 build:
 	go build $(BUILD_FLAGS) -o ./build/cdnoded ./cmd/cdnoded
 
-
 clean:
 	rm -rf \
-    $(BUILDDIR)/ \
-    artifacts/ \
-    tmp-swagger-gen/
+		$(BUILDDIR)/ \
+		artifacts/ \
+		tmp-swagger-gen/
+
+docker-build:
+	$(DOCKER) build -f ./docker/Dockerfile.build -t cdnode\:$(VERSION) .; \
+	$(DOCKER) run --rm -v $(CURDIR)\:/code cdnode\:$(VERSION) make build;
+
+docker-test:
+	$(DOCKER) build -f ./docker/Dockerfile.test -t cdnode_test\:$(VERSION) .; \
+	$(DOCKER) run cdnode_test\:$(VERSION);
