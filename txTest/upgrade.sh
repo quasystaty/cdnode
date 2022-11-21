@@ -8,7 +8,6 @@ DENOM="unoria"
 GAS_PRICE="0.0025"
 export DAEMON_NAME="cdnoded"
 export DAEMON_HOME="$HOME/$BINARY_DIR"
-export DAEMON_ALLOW_DOWNLOAD_BINARIES=true
 
 if ! command -v cosmovisor &>/dev/null; then
   echo "\n\ncosmovisor could not be found"
