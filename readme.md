@@ -14,7 +14,7 @@ The layer 1 Cosmos blockchain for the Crypto Dollar
 - Public RPC: [https://chaos-rpc.cryptodollar.dev](https://chaos-rpc.cryptodollar.dev)
 - Public LCD: [https://chaos-lcd.cryptodollar.dev](https://chaos-lcd.cryptodollar.dev)
 - LCD Docs: [https://chaos-lcd.cryptodollar.dev/swagger/](https://chaos-lcd.cryptodollar.dev/swagger/)
-- Block explorer: [https://explorer.cryptodollar.dev](https://explorer.cryptodollar.dev)
+- Block explorer: [https://app.noria.network](https://app.noria.network)
 
 # Chain Specs
 
