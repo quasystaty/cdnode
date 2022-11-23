@@ -6,7 +6,7 @@ The layer 1 Cosmos blockchain for the Crypto Dollar
 
 ### [testnet]
 
-- Current binary version: v0.5.0  
+- Current binary version: v0.7.3  
 - Staking denom: `unoria`
 - Denom exponent: `6`
 - Wallet prefix: `noria`
@@ -18,12 +18,10 @@ The layer 1 Cosmos blockchain for the Crypto Dollar
 
 # Chain Specs
 
-- Permissionned governance by whitelisted account
 - Automatic minting disabled
 - Manual minting/burning of custom denoms by whitelisted minters
-- CosmWasm 1.0.0 enabled
+- CosmWasm 1.1 enabled
 - IBC enabled
-- Interchain Accounts enabled
 - Staking denom `unoria` total supply: `1B`
 
 # Install
@@ -38,9 +36,9 @@ At this point, you have a `cdnoded` binary installed, used to run a node/validat
 
 # Running a local development environment
 
-Read through [init_local.sh](init_local.sh) for more details.
+Read through [scripts/init_local.sh](./scripts/init_local.sh) for more details.
 
-### 1. `./init_local.sh`
+### 1. `./scripts/init_local.sh`
 
 ### 2. `cdnoded start`
 
@@ -215,17 +213,6 @@ cdnoded tx coinmaster burn \\
 --chain-id="oasis-2"
 ```
 
-# Permissionned Governance
-
-The **Permgov** module allows on-chain governance to be executed by a whitelisted address.
-
-Instead of modifying the native `gov` module to support governance, `permgov` simply intercepts `submit-proposal` and `vote` transactions and only allows the whitelisted address to execute them.  
-The whitelisted address is called the **Governor** and is a parameter of the `permgov` module.
-
-The default value of the governor is an empty string, which allows anyone to submit proposals and vote.  
-
-<br />
-<br />
 <br />
 <br />
  
