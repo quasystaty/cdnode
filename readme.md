@@ -193,7 +193,7 @@ The default value of the minter is an empty string, which allows anyone to mint/
 
 ```bash
 cdnoded tx coinmaster mint \
-"1000000ucrd" \
+1000000ucrd \
 --from="myWalletName" \
 --gas="auto" \
 --gas-prices="0.0025unoria" \
@@ -205,7 +205,7 @@ cdnoded tx coinmaster mint \
 
 ```bash
 cdnoded tx coinmaster burn \
---amount="1000000ucrd" \
+1000000ucrd \
 --from="myWalletName" \
 --gas="auto" \
 --gas-prices="0.0025unoria" \

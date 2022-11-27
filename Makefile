@@ -108,6 +108,8 @@ clean:
 		artifacts/ \
 		tmp-swagger-gen/
 
+rebuild: clean build
+
 docker-build:
 	$(DOCKER) build -f ./docker/Dockerfile.build -t cdnode\:$(VERSION) .; \
 	$(DOCKER) run --rm -v $(CURDIR)\:/code cdnode\:$(VERSION) make build;
