@@ -192,24 +192,24 @@ The default value of the minter is an empty string, which allows anyone to mint/
 ### Minting
 
 ```bash
-cdnoded tx coinmaster mint \\
---amount="1000000ucrd" \\
---from="myWalletName" \\
---gas="auto" \\
---gas-prices="0.0025unoria" \\
---gas-adjustment="1.75" \\
+cdnoded tx coinmaster mint \
+"1000000ucrd" \
+--from="myWalletName" \
+--gas="auto" \
+--gas-prices="0.0025unoria" \
+--gas-adjustment="1.75" \
 --chain-id="oasis-2"
 ```
 
 ### Burning
 
 ```bash
-cdnoded tx coinmaster burn \\
---amount="1000000ucrd" \\
---from="myWalletName" \\
---gas="auto" \\
---gas-prices="0.0025unoria" \\
---gas-adjustment="1.75" \\
+cdnoded tx coinmaster burn \
+--amount="1000000ucrd" \
+--from="myWalletName" \
+--gas="auto" \
+--gas-prices="0.0025unoria" \
+--gas-adjustment="1.75" \
 --chain-id="oasis-2"
 ```
 
