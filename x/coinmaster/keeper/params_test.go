@@ -9,7 +9,7 @@ import (
 )
 
 func TestGetParams(t *testing.T) {
-	k, ctx := testkeeper.CoinmasterKeeper(t)
+	k, ctx := testkeeper.NewCoinmasterKeeper(t)
 	params := types.DefaultParams()
 
 	k.SetParams(ctx, params)

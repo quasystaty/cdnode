@@ -6,6 +6,7 @@ COMMIT := $(shell git log -1 --format='%H')
 LEDGER_ENABLED ?= true
 BINDIR ?= $(GOPATH)/bin
 BUILDDIR ?= $(CURDIR)/build
+MOCKSDIR ?= $(CURDIR)/mocks
 SIMAPP = ./app
 HTTPS_GIT := https://github.com/cdbo/cdnode.git
 DOCKER := $(shell which docker)
@@ -117,3 +118,8 @@ docker-build:
 docker-test:
 	$(DOCKER) build -f ./docker/Dockerfile.test -t cdnode_test\:$(VERSION) .; \
 	$(DOCKER) run cdnode_test\:$(VERSION);
+
+test:
+	(which mockery || go install github.com/vektra/mockery/v2@latest)
+	go generate ./...
+	# go test ./... -v
