@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/tendermint/tendermint/libs/log"
+	"golang.org/x/exp/slices"
 
 	"github.com/cdbo/cdnode/x/coinmaster/types"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -11,30 +12,30 @@ import (
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 )
 
-type (
-	Keeper struct {
-		cdc        codec.BinaryCodec
-		storeKey   sdk.StoreKey
-		memKey     sdk.StoreKey
-		paramstore paramtypes.Subspace
+// The Keeper instance
+type Keeper struct {
+	cdc        codec.BinaryCodec
+	storeKey   sdk.StoreKey
+	memKey     sdk.StoreKey
+	paramstore paramtypes.Subspace
 
-		bankKeeper types.BankKeeper
-	}
-)
+	bankKeeper types.BankKeeper
+}
 
+// Determine whether the requested denom is allowed
 func IsDenomWhiteListed(denoms []string, denom string) bool {
+
+	// Denom is allowed IF
+	//  - there are no denoms in the whitelist
+	//  - OR there is ONE denom and its value is empty
 	if len(denoms) == 0 || len(denoms) == 1 && denoms[0] == "" {
 		return true
 	} else {
-		for _, d := range denoms {
-			if d == denom {
-				return true
-			}
-		}
-		return false
+		return slices.Contains(denoms, denom)
 	}
 }
 
+// Creates a new Coinmaster keeper instance
 func NewKeeper(
 	cdc codec.BinaryCodec,
 	storeKey,
