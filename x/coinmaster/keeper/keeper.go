@@ -25,12 +25,13 @@ type Keeper struct {
 // Determine whether the requested denom is allowed
 func IsDenomWhiteListed(denoms []string, denom string) bool {
 
-	// Denom is allowed IF
-	//  - there are no denoms in the whitelist
-	//  - OR there is ONE denom and its value is empty
 	if len(denoms) == 0 || len(denoms) == 1 && denoms[0] == "" {
+		// Denom is allowed IF
+		//  - there are no denoms in the whitelist
+		//  - OR there is ONE denom and its value is empty
 		return true
 	} else {
+		// ... otherwise the denom must exist in the whitelist as an EXACT match
 		return slices.Contains(denoms, denom)
 	}
 }
