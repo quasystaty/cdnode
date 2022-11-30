@@ -17,7 +17,7 @@ func (k msgServer) Mint(goCtx context.Context, msg *types.MsgMint) (*types.MsgMi
 	minters := k.Minters(ctx)
 	if minters != types.DefaultMinters {
 		if msg.Creator != minters {
-			return nil, errors.New("unauthorized account")
+			return nil, errors.New(Error_unauthorized_account)
 		}
 	}
 
@@ -25,7 +25,7 @@ func (k msgServer) Mint(goCtx context.Context, msg *types.MsgMint) (*types.MsgMi
 
 	denoms := strings.Split(k.Denoms(ctx), ",")
 	if !IsDenomWhiteListed(denoms, coins[0].Denom) {
-		return nil, errors.New("unauthorized denom")
+		return nil, errors.New(Error_unauthorized_denom)
 	}
 
 	err := k.bankKeeper.MintCoins(ctx, types.ModuleName, coins)
