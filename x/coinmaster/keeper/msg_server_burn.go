@@ -16,7 +16,7 @@ func (k msgServer) Burn(goCtx context.Context, msg *types.MsgBurn) (*types.MsgBu
 	minters := k.Minters(ctx)
 	if minters != types.DefaultMinters {
 		if msg.Creator != minters {
-			return nil, errors.New("unauthorized account")
+			return nil, errors.New(Error_unauthorized_account)
 		}
 	}
 
@@ -24,7 +24,7 @@ func (k msgServer) Burn(goCtx context.Context, msg *types.MsgBurn) (*types.MsgBu
 
 	denoms := strings.Split(k.Denoms(ctx), ",")
 	if !IsDenomWhiteListed(denoms, coins[0].Denom) {
-		return nil, errors.New("unauthorized denom")
+		return nil, errors.New(Error_unauthorized_denom)
 	}
 
 	addr, err := sdk.AccAddressFromBech32(msg.Creator)
