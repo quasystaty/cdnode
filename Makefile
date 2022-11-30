@@ -122,4 +122,4 @@ docker-test:
 test:
 	(which mockery || go install github.com/vektra/mockery/v2@latest)
 	go generate ./...
-	# go test ./... -v
+	go test ./... -v
