@@ -17,7 +17,13 @@ import (
 	tmdb "github.com/tendermint/tm-db"
 )
 
-func CoinmasterKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
+// NewCoinmasterKeeper: Creates a new test keeper
+func NewCoinmasterKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
+	return NewCoinmasterKeeperWithBankKeeper(t, nil)
+}
+
+// NewCoinmasterKeeper: Creates a new test keeper with the specified bank keeper
+func NewCoinmasterKeeperWithBankKeeper(t testing.TB, bankKeeper types.BankKeeper) (*keeper.Keeper, sdk.Context) {
 	storeKey := sdk.NewKVStoreKey(types.StoreKey)
 	memStoreKey := storetypes.NewMemoryStoreKey(types.MemStoreKey)
 
@@ -41,7 +47,7 @@ func CoinmasterKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
 		storeKey,
 		memStoreKey,
 		paramsSubspace,
-		nil,
+		bankKeeper,
 	)
 
 	ctx := sdk.NewContext(stateStore, tmproto.Header{}, false, log.NewNopLogger())

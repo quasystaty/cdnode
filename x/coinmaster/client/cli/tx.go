@@ -1,14 +1,12 @@
 package cli
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/spf13/cobra"
 
-	"github.com/cosmos/cosmos-sdk/client"
-	// "github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cdbo/cdnode/x/coinmaster/types"
+	"github.com/cosmos/cosmos-sdk/client"
 )
 
 var (
@@ -24,7 +22,8 @@ const (
 func GetTxCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:                        types.ModuleName,
-		Short:                      fmt.Sprintf("%s transactions subcommands", types.ModuleName),
+		Short:                      "Interact with the Coinmaster to mint and burn coins.",
+		Long:                       `Coinmaster allows minting and burning of whitelisted native coins, by whitelisted minters. The amount denomination may be restricted by a whiteist too. These parameters may be adjusted through governance proposals.`,
 		DisableFlagParsing:         true,
 		SuggestionsMinimumDistance: 2,
 		RunE:                       client.ValidateCmd,
@@ -32,7 +31,6 @@ func GetTxCmd() *cobra.Command {
 
 	cmd.AddCommand(CmdMint())
 	cmd.AddCommand(CmdBurn())
-	// this line is used by starport scaffolding # 1
 
 	return cmd
 }

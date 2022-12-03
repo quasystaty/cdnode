@@ -1,8 +1,6 @@
 package cli
 
 import (
-	"strconv"
-
 	"github.com/cdbo/cdnode/x/coinmaster/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -10,8 +8,6 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/spf13/cobra"
 )
-
-var _ = strconv.Itoa(0)
 
 func CmdBurn() *cobra.Command {
 	cmd := &cobra.Command{
